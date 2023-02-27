@@ -14,6 +14,9 @@ Begin by cloning the repository to your local machine:
 
 Create a virtual environment for dependencies:
 
+You can use Anaconda Virtual Environment if thats what you are familiar with. You can follow the same process as rango.
+or you can use the python built in Virtual Environment by following the steps below
+
 Linux:
 
 `virtualenv <path-to-venv>`
