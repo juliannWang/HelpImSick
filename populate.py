@@ -9,7 +9,6 @@ import csv
 import random
 
 
-
 def populate():
     createFiveRandomAccounts()
     createFakePostsAndComments()
