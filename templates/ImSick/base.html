@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+    <head lang="en">
+        <meta charset="UTF-8" />
+        <title>
+            Help I'm Sick
+            {% block title_block %} 
+
+            {% endblock %}
+        </title>
+    </head>
+
+    <body>
+    <!-- Page specific content goes here -->
+        <div>
+            {% block body_block %}
+            {% endblock %}
+        </div>
+
+        <div>
+            {% block sidebar_block %}
+                {% get_category_list %}
+            {% endblock %}
+        </div>
+        <hr />
+    </body>
+
+</html>
