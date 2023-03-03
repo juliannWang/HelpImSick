@@ -44,7 +44,7 @@ Dependencies are now installed.
 
 To complete the initial Django setup, the following needs to be run:
 
-`python manage.py makemigrations` and then,
+`python manage.py makemigrations ImSick` and then,
 
 `python manage.py migrate`
 
