@@ -44,18 +44,23 @@ def exportaccounts(details):
         
 def createFakePostsAndComments():
     fake = Faker()
-    for i in range(1,5):
+    user_accounts = UserAccount.objects.all()
+    user_ids = [account.user_id for account in user_accounts]
+    print("***********************************************************")
+    print(user_ids)
+    
+    for i in range(5):
         title = fake.sentence()
         postContent = fake.text()
         postDate = fake.date_time_this_month(before_now=True, after_now=False, tzinfo=None)
         postLikes = 0
-        postBy = UserAccount.objects.filter(user_id = i)[0]
-        print(postBy)
+        print("**********************************")
+        postBy = UserAccount.objects.filter(user_id = user_ids[i])[0]
         post = Post.objects.get_or_create(title=title,postContent=postContent,postDate=postDate,postLikes=postLikes,postBy=postBy)[0]
         post.save()
         
         for i in range(5):
-            commentedBy = UserAccount.objects.filter(user_id = random.randint(1,5))[0]
+            commentedBy = UserAccount.objects.filter(user_id = user_ids[random.randint(0,4)])[0]
             commentOnPost = post
             commentDate = fake.date_time_this_month(before_now=True, after_now=False, tzinfo=None)
             commentContext = fake.text()
