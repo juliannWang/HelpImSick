@@ -46,15 +46,12 @@ def createFakePostsAndComments():
     fake = Faker()
     user_accounts = UserAccount.objects.all()
     user_ids = [account.user_id for account in user_accounts]
-    print("***********************************************************")
-    print(user_ids)
     
     for i in range(5):
         title = fake.sentence()
         postContent = fake.text()
         postDate = fake.date_time_this_month(before_now=True, after_now=False, tzinfo=None)
         postLikes = 0
-        print("**********************************")
         postBy = UserAccount.objects.filter(user_id = user_ids[i])[0]
         post = Post.objects.get_or_create(title=title,postContent=postContent,postDate=postDate,postLikes=postLikes,postBy=postBy)[0]
         post.save()
