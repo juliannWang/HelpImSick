@@ -1,0 +1,26 @@
+{% extends 'ImSick/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Login
+{% endblock %}
+
+{% block body_block %}
+<h1>Login to your Account</h1>
+
+<!-- need to change form action -->
+<form id="login_form" method="post" action="{% url 'rango:login' %}">
+    {% csrf_token %}
+    Email: <input type="email" name="email" value="" size="50" />
+    <br />
+    
+    Password: <input type="password" name="password" value="" size="50" />
+    <br />
+    <input type="submit" value="Sign in" />
+
+</form>
+
+    Don't have an account?
+   <strong>Create Account</strong><br/>
+
+{% endblock %}
