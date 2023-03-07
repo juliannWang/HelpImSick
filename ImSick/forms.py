@@ -12,7 +12,7 @@ class UserForm(forms.ModelForm):
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
-        model = UserProfile
+        model = UserAccount
         fields = ('phoneNumber','about','country','language','profilePicture',)
 
 

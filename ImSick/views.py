@@ -1,10 +1,11 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from ImSick.models import UserAccount
 from ImSick.models import Post
 from ImSick.models import Comment
 from django.shortcuts import redirect
 from django.urls import reverse
-from ImSick.forms import UserForm
+from ImSick.forms import UserForm ,UserProfileForm, PostForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
@@ -81,7 +82,7 @@ def myPosts(request):
             posts_by_user.append(post)
     
 
-    contex_dict = {'posts':posts_by_user}
+    context_dict = {'posts':posts_by_user}
 
     response = render(request, 'HelpImSick/index/myPosts.html', context=context_dict)
 

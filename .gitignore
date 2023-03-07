@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 ImSick/migrations/
 useraccount_details_output
+HelpImSick/__pycache__/__init__.cpython-39.pyc
+HelpImSick/__pycache__/urls.cpython-39.pyc
+HelpImSick/__pycache__/settings.cpython-39.pyc
