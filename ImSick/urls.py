@@ -4,7 +4,7 @@ from rango import views
 app_name = 'HelpImSick'
 
 urlpatterns = [
-    path('index/',views.index, name='index'),
+    path('index/', views.index, name='index'),
     path('login/', views.login, name='index'),
     path('createAccount/', views.createAccount, name='createAccount'),
     path('index/settings/', views.settings, name='settings'),

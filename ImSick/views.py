@@ -34,36 +34,43 @@ def login(request):
 def createAccount(request):
     registered = False
 
-
-    if request.method == 'POST':
+    if request.method == "POST":
         user_form = UserForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
 
-
-        if user_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
 
-            user.set_password(password)
+            user.set_password(user.password)
             user.save()
 
+            profile = profile_form.save(commit=False)
+            profile.user = user
+
             if 'picture' in request.FILES:
-                user.profile_picture = request.FILES['picture']
+                profile.picture = request.FILES['picture']
 
-                user.save()
+            profile.save()
 
-                registered = True
-            
+            registered = True
+
         else:
-            print(user_form.errors)
+            print(user_form.errors, profile_form.errors)
+
     else:
         user_form = UserForm()
+        profile_form = UserProfileForm()
 
-        return render(request, 'HelpImSick/createAccount.html', context={'user_form':user_form, 'registered':registered})
+    return render(request, 'rango/register.html', context={'user_form': user_form,
+                                                             'profile_form': profile_form,
+                                                             'registered': registered})
+
 
 
 @login_required
 def myPosts(request):
     if request.user.is_authenticated:
-        username = request.user.user
+        username = request.user.username
 
     post_list = Post.objects.order_by('postLikes')
 
@@ -82,7 +89,7 @@ def myPosts(request):
 @login_required
 def createPost(request):
     if request.user.is_authenticated:
-        username = request.user.user
+        username = request.user.username
 
         form = PostForm()
 
