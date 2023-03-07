@@ -33,5 +33,3 @@ class Comment(models.Model):
     commentOnPost = models.ForeignKey(Post,on_delete=models.SET_NULL,null=True)
     commentDate = models.DateTimeField()
     commentContent = models.CharField(max_length=50)
-    
-    
