@@ -8,6 +8,9 @@ from django.urls import reverse
 from ImSick.forms import UserForm ,UserProfileForm, PostForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.generic import View
+from django.http import JsonResponse
+import googlemaps
 
 
 # Create your views here.
@@ -112,6 +115,36 @@ def createPost(request):
         context_dict = {'post':post}
 
         return render(request, 'HelpImSick/createPost.html')
+    
+
+class getNearbyDoctors(View):
+    def get(self,request):
+        lat = request.GET.get('lat')
+        lon = request.GET.get('lon')
+
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest': #checks if page is a ajax request
+            api_key = 'AIzaSyBchxq-fKOpe1l1qeEZEX2NkseyzRbgnbs'
+            client = googlemaps.Client(api_key)
+
+            location = lat + "," +lon
+            radius = 1500 # 1.5km
+
+            place_type = 'doctor'
+
+            result = client.places_nearby(location=location,radius=radius, type=place_type)
+
+            places = result['results'][:3]
+
+            nearbyDocs = {}
+            for i in range(3):
+                placeid = places[i]['place_id']
+                place_details = client.place(place_id = placeid)
+                nearbyDocs[i] = place_details
+
+            return JsonResponse(nearbyDocs, status = 200)
+
+        return render(request,'nearby-Doctors.html')
+
 
 
 

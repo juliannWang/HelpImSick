@@ -13,4 +13,5 @@ urlpatterns = [
     path('index/createPost/', views.createPost, name='createPost'),
     path('index/myPosts/', views.myPosts, name='myPosts'),
     #path('index/nearestGP', views.nearestGp, name='nearestGP'),
+    path('nearby-doctors/', views.getNearbyDoctors.as_view(), name = 'nearby-doctors'),
 ]
