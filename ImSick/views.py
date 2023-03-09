@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
-from ImSick.form import RegistrationForm
+from .form import RegistrationForm
 from .models import UserAccount
+from django.db.models import Q
+from .models import Post
 
 
 def register(request):
@@ -38,4 +40,10 @@ def register(request):
 
 
 def search_posts(request):
-    return render(request, 'search_posts.html', )
+    query = request.GET.get('q')
+    if query:
+        results = Post.objects.filter(
+            Q(title__icontains=query) | Q(postContent__icontains=query))
+    else:
+        results = []
+    return render(request, 'search_posts.html', {'results': results})

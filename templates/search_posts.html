@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>search_posts</h1>
+    <form action="{% url 'search_posts' %}" method="get">
+        <input type="text" name="q" placeholder="Search...">
+        <button type="submit">search_posts</button>
+    </form>
+    
+	{% if results %}
+    <h2>Results</h2>
+    <ul>
+        {% for result in results %}
+            <li>{{ result.title }} - {{ result.postContent }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}
