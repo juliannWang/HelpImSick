@@ -43,6 +43,21 @@ body {
   border-color: teal;
 }
 
+.redirect-register{
+  font-weight: bold;
+  color: teal;
+  margin-top: -10px;
+}
+
+a:link{
+  text-decoration: none;
+}
+
+a:hover { 
+  text-decoration: underline; 
+  color: teal;
+}
+
 .nav-scroller {
   position: relative;
   z-index: 2;
