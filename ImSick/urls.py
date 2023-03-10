@@ -5,7 +5,7 @@ app_name = 'HelpImSick'
 
 urlpatterns = [
     path('', views.user_login, name='login'),
-    path('create-account/', views.createAccount, name='createAccount'),
+    path('register/', views.createAccount, name='createAccount'),
     path('index/',views.index, name= "test"),
     #path('index/settings/', views.settings, name='settings'),
     path('post/<int:postID>', views.postDetails ,name='post'),

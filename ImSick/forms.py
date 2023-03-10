@@ -29,8 +29,6 @@ class CommentForm(forms.ModelForm):
         }
         
         
-class UserProfileForm(forms.ModelForm):
-    class Meta:
-        model = UserAccount
+
         
         
