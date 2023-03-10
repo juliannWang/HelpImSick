@@ -1,11 +1,13 @@
-from django.http import HttpResponse
+import datetime
+from django.utils import timezone
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from ImSick.models import UserAccount
 from ImSick.models import Post
 from ImSick.models import Comment
 from django.shortcuts import redirect
 from django.urls import reverse
-from ImSick.forms import UserForm ,UserProfileForm, PostForm
+from ImSick.forms import UserForm ,UserProfileForm, PostForm, CommentForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.generic import View
@@ -14,26 +16,54 @@ import googlemaps
 
 
 # Create your views here.
-def login(request):
+@login_required
+def test(request):
+    print("*********************** request ************************")
+    print(request.user.id)
+    return HttpResponse("test")
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('HelpImSick:login'))
+
+#fixed, Working
+@login_required
+def index(request):
+    account = UserAccount.objects.get(user=request.user)
+    Posts = Post.objects.all()
+    Comments = Comment.objects.all()
+    context_dict = {}
+    context_dict['posts'] = Posts
+    context_dict['comments'] = Comments
+    context_dict['accoount'] = account
+    
+    response = render(request, 'index.html' , context=context_dict)
+    
+    return response
+    
+#working  
+def user_login(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
-        user = authenticate(email=email, password=password)
+
+        user = authenticate(username=username, password=password)
 
         if user:
             if user.is_active:
                 login(request, user)
-                return redirect(reverse('HelpImSick:index'))
+                return redirect(reverse('HelpImSick:test'))
             else:
                 return HttpResponse("Your HelpImSick account is disabled")
         
         else:
-            print(f"Invalid login details: {email}, {password}")
+            print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Email or password incorrect")
 
     else:
-        return render(request, 'HelpImSick/login.html')
+        return render(request, 'login.html')
 
 def createAccount(request):
     registered = False
@@ -73,19 +103,13 @@ def createAccount(request):
 
 @login_required
 def myPosts(request):
-    if request.user.is_authenticated:
-        username = request.user.username
+    #if request.user.is_authenticated:
+    #    username = request.user.username
 
-    post_list = Post.objects.order_by('postLikes')
+    userAccount = UserAccount.objects.get(user=request.user)
+    posts = Post.objects.fiter(postBy=userAccount)
 
-    posts_by_user = []
-
-    for post in post_list:
-        if(post_list.postBy == username):
-            posts_by_user.append(post)
-    
-
-    context_dict = {'posts':posts_by_user}
+    context_dict = {'posts':posts}
 
     response = render(request, 'HelpImSick/index/myPosts.html', context=context_dict)
 
@@ -94,31 +118,33 @@ def myPosts(request):
 def createPost(request):
     if request.user.is_authenticated:
         username = request.user.username
+        userAccount = UserAccount.objects.get(user=request.user)
 
         form = PostForm()
 
         if request.method == 'POST':
-            form = PostForm(request.POST)
+            form = PostForm(request.POST, request.FILES)
 
             if form.is_valid():
                 post = form.save(commit=False)
                 post.postLikes = 0
-                post.postBy = username
-                page.save()
+                post.postBy = userAccount
+                post.postDate = timezone.now()
+                if 'postImage' in request.FILES:
+                    print("IMAGES IS HERE")
+                    post.postImage = request.FILES['postImage']
+                post.save()
 
 
-                return redirect(reverse('HelpImSick: myPosts'))
+                return redirect(reverse('HelpImSick:test'))
             else:
                 print(form.errors)
 
+        return render(request, 'createPost.html',context = {'form':form})
 
-        context_dict = {'post':post}
-
-        return render(request, 'HelpImSick/createPost.html')
-    
-
-class getNearbyDoctors(View):
-    def get(self,request):
+@login_required   
+def get_nearby_doctors(request):
+    if request.method == 'GET':
         lat = request.GET.get('lat')
         lon = request.GET.get('lon')
 
@@ -135,17 +161,66 @@ class getNearbyDoctors(View):
 
             places = result['results'][:3]
 
-            nearbyDocs = {}
+            nearby_docs = {}
             for i in range(3):
                 placeid = places[i]['place_id']
                 place_details = client.place(place_id = placeid)
-                nearbyDocs[i] = place_details
+                nearby_docs[i] = place_details
 
-            return JsonResponse(nearbyDocs, status = 200)
+            return JsonResponse(nearby_docs, status=200)
 
-        return render(request,'nearby-Doctors.html')
+    return render(request, 'nearby-Doctors.html')
+
+#THIS WORKS LETS GOOOOOOOOO
+@login_required
+def postDetails(request,postID):
+    postByID = Post.objects.get(postID=postID)
+    comments = Comment.objects.filter(commentOnPost=postByID)
+    userAccount = UserAccount.objects.get(user= request.user)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        commentContent = request.POST.get('commentContent')
+        if form.is_valid():
+            comment = form.save(commit = False)
+            comment.commentedBy = userAccount
+            comment.commentOnPost = postByID
+            comment.commentDate = timezone.now()
+            comment.save()
+            return redirect(reverse('HelpImSick:post', args = [postID]))
+        else:
+            print(form.errors)
+    form = CommentForm()
+    context_dict = {}
+    context_dict["post"] = postByID
+    context_dict["comments"] = comments
+    context_dict["form"] = form
+    
+    response = render(request,"postDetails.html",context = context_dict)
+    return response
 
 
+@login_required
+def add_comment(request,postID):
+    post = Post.objects.get(postID = postID)
+    userAccount = UserAccount.objects.get(user= request.user)
+    form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit = False)
+            comment.commentedBy = userAccount
+            comment.commentOnPost = post
+            comment.save()
+            return redirect(reverse('HelpImSick:post',
+                                    kwargs={'postID':postID}))
+        else:
+            print(form.errors)
+    context_dict = {'form':form}
+    return HttpResponse("add_comment")
 
-
-
+@login_required
+def searchPosts(request):
+    query = request.GET.get('query')
+    posts = Post.objects.filter(title__icontains=query) | Post.objects.filter(postContent__icontains=query)
+    context_dict = {"query":query,"posts":posts}
+    return render(request,"searchResults.html",context=context_dict)

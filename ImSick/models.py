@@ -21,7 +21,7 @@ class Post(models.Model):
     postID = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
     postContent = models.CharField(max_length=1000)
-    postImage = models.ImageField(upload_to='images',blank = True)
+    postImage = (models.ImageField(upload_to='images',blank = True))
     postDate = models.DateTimeField()
     postLikes = models.IntegerField(999)
     postBy = models.ForeignKey(UserAccount,on_delete=models.SET_NULL,null=True)
