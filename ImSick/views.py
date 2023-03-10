@@ -7,7 +7,7 @@ from ImSick.models import Post
 from ImSick.models import Comment
 from django.shortcuts import redirect
 from django.urls import reverse
-from ImSick.forms import UserForm ,UserProfileForm, PostForm, CommentForm
+from ImSick.forms import UserForm , PostForm, CommentForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.generic import View
@@ -22,6 +22,7 @@ def test(request):
     print(request.user.id)
     return HttpResponse("test")
 
+#working
 @login_required
 def user_logout(request):
     logout(request)
@@ -64,56 +65,49 @@ def user_login(request):
 
     else:
         return render(request, 'login.html')
-
+#working
 def createAccount(request):
     registered = False
 
     if request.method == "POST":
         user_form = UserForm(request.POST)
-        profile_form = UserProfileForm(request.POST)
 
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid():
             user = user_form.save()
-
             user.set_password(user.password)
             user.save()
 
-            profile = profile_form.save(commit=False)
-            profile.user = user
-
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-
-            profile.save()
+            email = user.email
+            userAccount = UserAccount.objects.get_or_create(user=user,email=email)[0]
+            userAccount.save()
 
             registered = True
 
         else:
-            print(user_form.errors, profile_form.errors)
+            print(user_form.errors)
+        
+        return redirect(reverse('HelpImSick:login'))
 
     else:
         user_form = UserForm()
-        profile_form = UserProfileForm()
 
-    return render(request, 'rango/register.html', context={'user_form': user_form,
-                                                             'profile_form': profile_form,
+    return render(request, 'register.html', context={'form': user_form,
                                                              'registered': registered})
 
 
-
+#working
 @login_required
 def myPosts(request):
-    #if request.user.is_authenticated:
-    #    username = request.user.username
 
     userAccount = UserAccount.objects.get(user=request.user)
-    posts = Post.objects.fiter(postBy=userAccount)
+    posts = Post.objects.filter(postBy=userAccount)
 
     context_dict = {'posts':posts}
 
-    response = render(request, 'HelpImSick/index/myPosts.html', context=context_dict)
+    response = render(request, 'myPosts.html', context=context_dict)
+    return response
 
-
+#working
 @login_required
 def createPost(request):
     if request.user.is_authenticated:
@@ -142,6 +136,7 @@ def createPost(request):
 
         return render(request, 'createPost.html',context = {'form':form})
 
+#working
 @login_required   
 def get_nearby_doctors(request):
     if request.method == 'GET':
@@ -198,7 +193,7 @@ def postDetails(request,postID):
     response = render(request,"postDetails.html",context = context_dict)
     return response
 
-
+#working
 @login_required
 def add_comment(request,postID):
     post = Post.objects.get(postID = postID)
@@ -218,9 +213,38 @@ def add_comment(request,postID):
     context_dict = {'form':form}
     return HttpResponse("add_comment")
 
+#working
 @login_required
 def searchPosts(request):
     query = request.GET.get('query')
     posts = Post.objects.filter(title__icontains=query) | Post.objects.filter(postContent__icontains=query)
     context_dict = {"query":query,"posts":posts}
     return render(request,"searchResults.html",context=context_dict)
+
+@login_required
+def settings(request):
+    if request.method == 'POST' :
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        user_form = UserForm(data=request.POST)
+
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('settings')
+
+        if user_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+
+            user.save
+        else:
+            user_form = UserForm()
+    else:
+        profile_form = UserProfileForm(instance=request.user.profile)
+        user_form = UserForm(instance=request.user)
+
+    response = render(request, 'ImSick/index/settings.html', {'profile_form' : profile_form, 'user_form' : user_form})
+
+    return response
+
+
+

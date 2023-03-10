@@ -11,13 +11,10 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username','email', 'password',)
 
-class UserProfileForm(forms.ModelForm):
-    class Meta:
-        model = UserAccount
-        fields = ('phoneNumber','about','country','language','profilePicture',)
 
 
 class PostForm(forms.ModelForm):
+
     class Meta:
         model = Post
         fields = ('title','postContent','postImage')
@@ -30,4 +27,10 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'commentContent':forms.Textarea(attrs={'rows':4, 'cols':40}),
         }
+        
+        
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserAccount
+        
         

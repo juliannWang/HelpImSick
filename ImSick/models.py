@@ -6,13 +6,13 @@ class UserAccount(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,primary_key=True)
     
     #additional attributes
-    name = models.CharField(max_length=50)
-    phoneNumber = models.IntegerField(20)
-    email = models.CharField(max_length=50)
-    about = models.CharField(max_length=200)
-    country = models.CharField(max_length=30)
-    language = models.CharField(max_length=30)
-    profilePicture = (models.ImageField(upload_to='profile_images',blank = True))
+    name = models.CharField(max_length=50, null= True)
+    phoneNumber = models.IntegerField(20,null= True)
+    email = models.CharField(max_length=100)
+    about = models.CharField(max_length=200,null= True)
+    country = models.CharField(max_length=30, null= True)
+    language = models.CharField(max_length=30, null= True)
+    profilePicture = (models.ImageField(upload_to='profile_images',blank = True, null= True))
     
     def __str__(self):
         return self.user.username
