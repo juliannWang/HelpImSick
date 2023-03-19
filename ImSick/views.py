@@ -2,12 +2,13 @@ import datetime
 from django.utils import timezone
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.contrib.auth.models import User
 from ImSick.models import UserAccount
 from ImSick.models import Post
 from ImSick.models import Comment
 from django.shortcuts import redirect
 from django.urls import reverse
-from ImSick.forms import UserForm , PostForm, CommentForm
+from ImSick.forms import UserForm , PostForm, CommentForm, UserAccountForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.generic import View
@@ -223,26 +224,44 @@ def searchPosts(request):
 
 @login_required
 def settings(request):
+    user = User.objects.get(id=request.user.id)
+    userAccount = UserAccount.objects.get(user=request.user)
+    
+    
     if request.method == 'POST' :
-        profile_form = UserProfileForm(request.POST, request.FILES, instance=request.user.profile)
-        user_form = UserForm(data=request.POST)
+        username = request.POST.get('username', None)
+        password = request.POST.get('password', None)
+        name = request.POST.get('name', None)
+        phoneNumber = request.POST.get('phone_number', None)
+        about = request.POST.get('about', None)
+        country = request.POST.get('country', None)
+        language = request.POST.get('language', None)
+        image_file = request.FILES.get('image', None)
 
-        if profile_form.is_valid():
-            profile_form.save()
-            return redirect('settings')
+        if username:
+            user.username = username
+        if password:
+            user.set_password(password)
+        if name:
+            userAccount.name = name
+        if phoneNumber:
+            userAccount.phoneNumber = phoneNumber
+        if about:
+            userAccount.about = about
+        if country:
+            userAccount.country = country
+        if language:
+            userAccount.language = language
+        if image_file:
+            print("HELLO")
+            userAccount.profilePicture = image_file
+        user.save()
+        userAccount.save()
+    
+    context_dict = {"user" : user , "userAccount":userAccount}
 
-        if user_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
 
-            user.save
-        else:
-            user_form = UserForm()
-    else:
-        profile_form = UserProfileForm(instance=request.user.profile)
-        user_form = UserForm(instance=request.user)
-
-    response = render(request, 'ImSick/index/settings.html', {'profile_form' : profile_form, 'user_form' : user_form})
+    response = render(request, 'settings.html', context=context_dict)
 
     return response
 
