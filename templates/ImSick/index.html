@@ -6,9 +6,7 @@
 {% extends 'base.html' %}
 {% block content%}
 {% load static %}
-<a href='createPost/'>Create a post!</a>
-<a href='my-posts/'>My posts!</a>
-<a href='nearby-doctors/'>Nearby doctors!</a>
+
 {% if posts %}
     {% for p in posts %}
     <div class="container">
