@@ -52,9 +52,9 @@ img.icon:hover{
 }
 
 img.createpost{
-    position: absolute;
-    top: 120px;
-    right: 270px;
+    position: relative;
+    left: 1080px;
+    top: 40px;
     width: 40px;
     height:40px;
 }
