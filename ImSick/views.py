@@ -203,6 +203,23 @@ def deletePost(request,postID):
     postByID.delete()
     return redirect(reverse('HelpImSick:myPosts'))
 
+def likePost(request,postID):
+    postByID = Post.objects.get(postID=postID)
+    userAccount = UserAccount.objects.get(user=request.user)
+    postByID.likedBy.add(userAccount)
+    postByID.postLikes += 1
+    postByID.save()
+    return redirect(reverse('HelpImSick:post', args = [postID]))
+
+def unlikePost(request,postID):
+    postByID = Post.objects.get(postID=postID)
+    userAccount = UserAccount.objects.get(user=request.user)
+    postByID.likedBy.remove(userAccount)
+    postByID.postLikes -= 1
+    postByID.save()
+    return redirect(reverse('HelpImSick:post', args = [postID]))
+
+
 #working
 @login_required
 def add_comment(request,postID):
