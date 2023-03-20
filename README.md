@@ -53,3 +53,7 @@ This "imports" the changes made to the models throughout development.
 To run the Django web app, run the following:
 
 `python manage.py runserver`
+
+To add data, you can run the population script by doing the following:
+
+`python populate.py`
