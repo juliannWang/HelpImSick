@@ -189,9 +189,18 @@ def postDetails(request,postID):
     context_dict["post"] = postByID
     context_dict["comments"] = comments
     context_dict["form"] = form
+    context_dict["user"] = userAccount
     
     response = render(request,"postDetails.html",context = context_dict)
     return response
+
+def deletePost(request,postID):
+    postByID = Post.objects.get(postID=postID)
+    comments = Comment.objects.filter(commentOnPost = postByID)
+    for comment in comments:
+        comment.delete()
+    postByID.delete()
+    return redirect(reverse('HelpImSick:myPosts'))
 
 #working
 @login_required
