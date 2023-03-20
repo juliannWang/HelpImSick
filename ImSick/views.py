@@ -56,3 +56,15 @@ def settings(request):
     response = render(request, 'ImSick/index/settings.html', {'profile_form' : profile_form, 'user_form' : user_form})
 
     return response
+
+@login_required
+def delete_comment(request, commentID):
+
+    if request.method == 'POST':
+        comment = Comment.objects.get(commentID=commentID)
+        postID = comment.commentOnPost.postID
+
+        if comment.commentedBy.user == request.user:
+            comment.delete()
+
+    return redirect(reverse('HelpImSick:post', args=[postID]))
