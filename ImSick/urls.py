@@ -10,7 +10,6 @@ urlpatterns = [
     #path('index/settings/', views.settings, name='settings'),
     path('post/<int:postID>', views.postDetails ,name='post'),
     path('post/<int:postID>/delete/', views.deletePost ,name='deletePost'),
-
     #path('index/search/', views.search, name='search'),
     #path('index/search/results', views.searchResults, name='searchResults'),
     path('index/createPost/', views.createPost, name='createPost'),

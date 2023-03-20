@@ -8,7 +8,7 @@ from ImSick.models import Post
 from ImSick.models import Comment
 from django.shortcuts import redirect
 from django.urls import reverse
-from ImSick.forms import UserForm , PostForm, CommentForm, UserAccountForm
+from ImSick.forms import UserForm , PostForm, CommentForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.generic import View
