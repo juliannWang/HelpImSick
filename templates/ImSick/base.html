@@ -31,30 +31,32 @@
 
         <!-- remaining icons-->
         <ul class="navbar-nav ms-auto mb-md-0">
-            <li class="nav-item">
-                <a href={% url 'HelpImSick:test' %}>Home</a>
-            <li class="nav-item">
-            <li class="nav-item">
-                <a href={% url 'HelpImSick:logout' %}>logout</a>
-            <li class="nav-item">
-                <img src={% static "images/location.png" %} alt="" width="40" height="40">
+            <li>
+              <a href={% url 'HelpImSick:test' %}><img class="icon" src={% static "images/home.png" %} alt="Home"></a>
             </li>
-            <li class="nav-item">
-                <img src={% static "images/settings.png"%} alt="" width="40" height="40">
+
+            <li>
+              <a href="nearby-doctors"><img class="icon" src={% static "images/location.png" %} alt="Nearest GP"></a>
             </li>
-            <li class="nav-item">
-                <img src={% static "images/ringing.png"%} alt="" width="40" height="40">
+
+            <li class="dropdown">
+                <img class="icon"src={% static "images/user.png"%} alt="User Account">
+                <div class="dropdown-content">
+                  <a href="settings/">Account Settings</a>
+                  <a href="my-posts/">My Posts</a>
+                  <a href={% url 'HelpImSick:logout' %}>Logout</a>
+                </div>
             </li>
-            <li class="nav-item">
-                <img src={% static "images/user.png"%} alt="" width="40" height="40">
-            </li>
+
         </ul>
 
     </div>
   </div>
 </nav>
+
 <br />
 <br />
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>     
     {% block content%}
     {%endblock%}

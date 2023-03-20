@@ -6,9 +6,9 @@
 {% extends 'base.html' %}
 {% block content%}
 {% load static %}
-<a href='createPost/'>Create a post!</a>
-<a href='my-posts/'>My posts!</a>
-<a href='nearby-doctors/'>Nearby doctors!</a>
+
+<a href="createPost/"><img class="createpost" src={% static "images/createpost.png" %} alt="Create Post"></a>
+
 {% if posts %}
     {% for p in posts %}
     <div class="container">
@@ -24,6 +24,7 @@
             </div>
         </div>
     </div>
+    
     {% endfor %}
 {% endif %}
 {% endblock %}
