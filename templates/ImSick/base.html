@@ -36,14 +36,14 @@
             </li>
 
             <li>
-              <a href="nearby-doctors"><img class="icon" src={% static "images/location.png" %} alt="Nearest GP"></a>
+              <a href="/nearby-doctors"><img class="icon" src={% static "images/location.png" %} alt="Nearest GP"></a>
             </li>
 
             <li class="dropdown">
                 <img class="icon"src={% static "images/user.png"%} alt="User Account">
                 <div class="dropdown-content">
-                  <a href="settings/">Account Settings</a>
-                  <a href="my-posts/">My Posts</a>
+                  <a href="/settings/">Account Settings</a>
+                  <a href="/my-posts/">My Posts</a>
                   <a href={% url 'HelpImSick:logout' %}>Logout</a>
                 </div>
             </li>
