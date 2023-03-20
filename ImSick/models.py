@@ -25,6 +25,8 @@ class Post(models.Model):
     postDate = models.DateTimeField()
     postLikes = models.IntegerField(999)
     postBy = models.ForeignKey(UserAccount,on_delete=models.SET_NULL,null=True)
+    likedBy = models.ManyToManyField(UserAccount, blank=True,related_name='liked_posts')
+
     
 
 class Comment(models.Model):
