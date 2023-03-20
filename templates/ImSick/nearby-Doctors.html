@@ -2,6 +2,7 @@
 {%block content %}
 {% load static %}
 <!DOCTYPE html>
+<link href={% static "css/nearbyDoctors.css"%} rel="stylesheet">
 <html>
   <head>
     <meta charset="utf-8">
@@ -11,9 +12,15 @@
   </head>
   <body onload="getLocation()">
     <h1>Get User Location</h1>
-    <div id="0"></div>
-    <div id="1"></div>
-    <div id="2"></div>
+    <div class="doctor1">
+      <div id="0"></div>
+    </div>
+    <div class="doctor2">
+      <div id="1"></div>
+    </div>
+    <div class="doctor3">
+      <div id="2"></div>
+    </div>
 
   </body>
 {% endblock%}

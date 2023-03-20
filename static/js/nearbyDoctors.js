@@ -27,6 +27,11 @@ function getLocation() {
                 var opening_hours = response.result.opening_hours.weekday_text;
 
 
+                var number_text = $('<h6>').text("Phone number:");
+                var opening_hours_text = $('<h6>').text("Opening Hours:");
+                var website_text = $('<h6>').text("Website:");
+                var address_text = $('<h6>').text("Address:");
+
                 var phone_number_element = $('<p>').text(phone_number);
                 var website_element = $('<p>').text(website)
                 var address_element = $('<p>').text(address)
@@ -37,14 +42,16 @@ function getLocation() {
                 });
                 var rating_element = $('<p>').text('Rating: ' + rating);
                 var elementID = '#' + index.toString();
-                $(elementID).append(phone_number_element);
                 $(elementID).append(name_element);
+                $(elementID).append(number_text);
+                $(elementID).append(phone_number_element);
+                $(elementID).append(opening_hours_text);
                 $(elementID).append(opening_hours_element);
                 $(elementID).append(rating_element);
+                $(elementID).append(website_text);
                 $(elementID).append(website_element);
+                $(elementID).append(address_text);
                 $(elementID).append(address_element);
-
-
             });
         }
     })

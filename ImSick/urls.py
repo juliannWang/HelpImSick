@@ -17,5 +17,5 @@ urlpatterns = [
     path('index/nearby-doctors/', views.get_nearby_doctors, name = 'nearby-doctors'),
     path('logout',views.user_logout,name="logout"),
     path('search/',views.searchPosts,name="search"),
-    path('settings/',views.settings,name="settings")
+    path('index/settings/',views.settings,name="settings")
 ]
