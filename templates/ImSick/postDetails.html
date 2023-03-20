@@ -13,6 +13,9 @@
                     <div class="card-body">
                         <h1> {{post.title}} </h1>
                         <p>{{post.postContent}}</p>
+                        {% if post.postBy == user%}
+                        <a href="{{post.postID}}/delete/" class="btn btn-danger">Delete</a>
+                        {% endif%}
                     </div>
                 </div>
 
