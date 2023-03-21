@@ -37,10 +37,10 @@ function getLocation() {
                 });
                 var rating_element = $('<p>').text('Rating: ' + rating);
                 var elementID = '#' + index.toString();
-                $(elementID).append(phone_number_element);
                 $(elementID).append(name_element);
                 $(elementID).append(opening_hours_element);
                 $(elementID).append(rating_element);
+                $(elementID).append(phone_number_element);
                 $(elementID).append(website_element);
                 $(elementID).append(address_element);
 

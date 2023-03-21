@@ -20,6 +20,9 @@
                         {% else %}
                             <a href="{{post.postID}}/unlike/" class="btn btn-primary">Unlike</a>
                         {% endif%}
+                        {% if post.postImage %}
+                        <img src="{{ MEDIA_URL }}/{{post.postImage}}" class="img-fluid mb-3">
+                        {% endif %}
                         <p>{{post.postContent}}</p>
                         {% if post.postBy == user%}
                         <a href="{{post.postID}}/delete/" class="btn btn-danger">Delete</a>
