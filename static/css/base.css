@@ -93,3 +93,19 @@ img.createpost:hover{
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+/* button colours for postdetails - like, unlike, delete AND settings */
+.btn-primary{
+    background-color: #e0f4fa;
+    color: rgb(0, 6, 128);
+}
+
+.btn-danger{
+    background-color: #ffebeb;
+    color: rgb(255, 5, 5);
+}
+
+.btn-secondary{
+    background-color: #f7f7f7;
+    color: rgb(77, 77, 77);
+}
