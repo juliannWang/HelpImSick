@@ -104,6 +104,7 @@ def myPosts(request):
     posts = Post.objects.filter(postBy=userAccount)
 
     context_dict = {'posts':posts}
+    context_dict['user'] = userAccount
 
     response = render(request, 'myPosts.html', context=context_dict)
     return response

@@ -6,7 +6,22 @@
 {% extends 'base.html' %}
 {% block content%}
 {% load static %}
-<h2>My posts</h2>
+<link href={% static "css/myPosts.css"%} rel="stylesheet">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class='card'>
+                <div class='card-body'>
+                    <h2 class="card-title">My profile</h2>
+                    {% if user.profilePicture %}
+                    <img src="{{ MEDIA_URL }}/{{user.profilePicture}}" class="img-fluid mb-3 float-right">
+                    {% endif %}
+                    <h6 class="card-subtitle mb-2">About: {{user.about}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% if posts %}
     {% for p in posts %}
     <div class="container">
