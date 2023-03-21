@@ -146,7 +146,8 @@ def get_nearby_doctors(request):
         lon = request.GET.get('lon')
 
         if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest': #checks if page is a ajax request
-            api_key = 'AIzaSyBchxq-fKOpe1l1qeEZEX2NkseyzRbgnbs'
+            #api_key = 'AIzaSyBchxq-fKOpe1l1qeEZEX2NkseyzRbgnbs'
+            api_key = ""
             client = googlemaps.Client(api_key)
 
             location = lat + "," +lon

@@ -10,18 +10,25 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class='card'>
+            <div class='card p-3 mb-4'>
                 <div class='card-body'>
-                    <h2 class="card-title">My profile</h2>
-                    {% if user.profilePicture %}
-                    <img src="{{ MEDIA_URL }}/{{user.profilePicture}}" class="img-fluid mb-3 float-right">
-                    {% endif %}
-                    <h6 class="card-subtitle mb-2">About: {{user.about}}</h5>
+                    <div class="row">
+                        <div class="col-4">
+                            {% if user.profilePicture %}
+                            <img src="{{ MEDIA_URL }}/{{user.profilePicture}}" class="img-fluid rounded-circle">
+                            {% endif %}
+                        </div>
+                        <div class="col-8">
+                            <h2 class="card-title mb-0">{{ user.name }} </h2>
+                            <p class="card-text">{{ user.about }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 {% if posts %}
     {% for p in posts %}
     <div class="container">
