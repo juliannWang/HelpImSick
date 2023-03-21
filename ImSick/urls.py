@@ -11,7 +11,7 @@ urlpatterns = [
     path('post/<int:postID>/delete/', views.deletePost ,name='deletePost'),
     path('post/<int:postID>/like/', views.likePost ,name='likePost'),
     path('post/<int:postID>/unlike/', views.unlikePost ,name='unlikePost'),
-
+    path('post/<int:postID>/deletecomment/<int:commentID>/',views.deleteComment,name="deleteComment"),
     path('index/createPost/', views.createPost, name='createPost'),
     path('my-posts/', views.myPosts, name='myPosts'),
     path('nearby-doctors/', views.get_nearby_doctors, name = 'nearby-doctors'),

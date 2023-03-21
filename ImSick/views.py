@@ -195,6 +195,15 @@ def postDetails(request,postID):
     response = render(request,"postDetails.html",context = context_dict)
     return response
 
+def deleteComment(request,postID,commentID):
+    comment = Comment.objects.get(commentID = commentID)
+    userAccount = UserAccount.objects.get(user=request.user)
+    if (comment.commentedBy == userAccount):
+        comment.delete()
+     
+    return redirect(reverse('HelpImSick:post', args = [postID]))
+
+
 def deletePost(request,postID):
     postByID = Post.objects.get(postID=postID)
     comments = Comment.objects.filter(commentOnPost = postByID)

@@ -37,6 +37,9 @@
                         <div class="border-bottom mb-3 pb-3">
                             <p> {{ c.commentContent}} </p>
                             <small> Commented by {{ c.commentedBy.user}}</small>
+                            {% if c.commentedBy == user %}
+                            <a href="{{post.postID}}/deletecomment/{{c.commentID}}/" class="btn btn-danger">Delete</a>
+                            {% endif %}
                         </div>    
                 {% empty %}
                     <p>No comments yet. </p>
