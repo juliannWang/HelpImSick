@@ -32,14 +32,14 @@ li{
 }  
 
 .btn {
-    background-color: #def2cb;
+    background-color: #edf8e2;
     color: teal;
 }
 
 .btn:hover {
-    color: #fff;
+    color: #edf8e2;
     background-color: teal;
-    border-color: #fff;
+    border-color: #edf8e2;
 }
 
 img.icon{
@@ -97,15 +97,33 @@ img.createpost:hover{
 /* button colours for postdetails - like, unlike, delete AND settings */
 .btn-primary{
     background-color: #e0f4fa;
-    color: rgb(0, 6, 128);
+    color: rgb(9, 18, 188);
+    margin-bottom: 20px;
+    border:none;
+}
+
+.btn-primary:hover{
+    background-color: rgb(9, 18, 188);
+    color: e0f4fa;
 }
 
 .btn-danger{
     background-color: #ffebeb;
-    color: rgb(255, 5, 5);
+    color: rgb(234, 54, 54);
+    border:none;
+}
+
+.btn-danger:hover{
+    background-color: rgb(234, 54, 54);
+    color: #ffebeb;
 }
 
 .btn-secondary{
     background-color: #f7f7f7;
     color: rgb(77, 77, 77);
+}
+
+.btn-secondary:hover{
+    background-color: rgb(77, 77, 77);
+    color: #f7f7f7;
 }
