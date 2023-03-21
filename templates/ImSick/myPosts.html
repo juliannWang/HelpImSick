@@ -23,5 +23,17 @@
         </div>
     </div>
     {% endfor %}
+{% else %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class='card'>
+                <div class='card-body'> 
+                    <h5 class="card-title">No posts yet!</h5>
+                </div>      
+            </div>
+        </div>
+    </div>
+</div>
 {% endif %}
 {% endblock %}
