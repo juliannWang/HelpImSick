@@ -13,7 +13,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.generic import View
 from django.http import JsonResponse
-import googlemaps
+
+
 
 
 # Create your views here.
