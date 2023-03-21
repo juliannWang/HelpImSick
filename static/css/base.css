@@ -1,4 +1,4 @@
-/* Show it is fixed to the top */
+/* base styling - navbar, icons */
 body {
     min-height: 75rem;
     padding-top: 4.5rem;
@@ -51,18 +51,6 @@ img.icon:hover{
     filter: brightness(0);
 }
 
-img.createpost{
-    position: relative;
-    left: 1080px;
-    top: 40px;
-    width: 40px;
-    height:40px;
-}
-
-img.createpost:hover{
-    filter:drop-shadow(0 0 1.0rem teal);
-}
-
 .dropdown {
     position: relative;
     display: inline-block;
@@ -92,4 +80,43 @@ img.createpost:hover{
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+/* for create post icon */
+img.createpost{
+    position: relative;
+    left: 1080px;
+    top: 40px;
+    width: 40px;
+    height:40px;
+}
+
+img.createpost:hover{
+    filter:drop-shadow(0 0 1.0rem teal);
+}
+
+
+/* for creating posts (createPost.html) */
+.create-post{
+    text-align: center;
+}
+
+.create-post input[type="file"]{
+    padding-left: 125px;
+    padding-bottom: 30px;
+}
+
+h3{
+    text-align: center;
+    font-size: 18px;
+    font-weight:bold;
+    padding-top: 30px;
+}
+
+.autoresizing {
+    display: block;
+    overflow: hidden;
+    resize: none;
+    margin-left: auto;
+    margin-right: auto;
 }
