@@ -16,11 +16,17 @@
                         <div class="col-4">
                             {% if user.profilePicture %}
                             <img src="{{ MEDIA_URL }}/{{user.profilePicture}}" class="img-fluid rounded-circle">
+                            {% else %}
+                            <img src={% static "images/blank-profile-pic.png"%} class="img-fluid rounded-circle">
                             {% endif %}
                         </div>
                         <div class="col-8">
+                            {% if user.name %}
                             <h2 class="card-title mb-0">{{ user.name }} </h2>
                             <p class="card-text">{{ user.about }}</p>
+                            {% else %}
+                            <p class="card-text">Add some information about yourself in settings</p>
+                            {%endif%}
                         </div>
                     </div>
                 </div>
