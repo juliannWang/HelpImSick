@@ -10,9 +10,9 @@ import random
 
 
 def populate():
+    addRealTestData()
     createFiveRandomAccounts()
     createFakePostsAndComments()
-    addRealTestData()
 
 
 def addRealTestData():
