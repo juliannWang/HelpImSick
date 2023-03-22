@@ -24,7 +24,7 @@ class Post(models.Model):
     postContent = models.CharField(max_length=1000)
     postImage = (models.ImageField(upload_to='images',blank = True))
     postDate = models.DateTimeField()
-    postLikes = models.IntegerField(999)
+    postLikes = models.IntegerField(9999999)
     postBy = models.ForeignKey(UserAccount,on_delete=models.SET_NULL,null=True)
     likedBy = models.ManyToManyField(UserAccount, blank=True,related_name='liked_posts')
     

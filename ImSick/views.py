@@ -324,9 +324,13 @@ def viewProfile(request,username):
     user = User.objects.get(username=username)
     userAccount = UserAccount.objects.get(user=user)
     posts = Post.objects.filter(postBy=userAccount)
+    favPosts = userAccount.favoritePosts.all()
+
 
     context_dict = {'posts':posts}
     context_dict['user'] = userAccount
+    context_dict['favPosts'] = favPosts
+
 
     response = render(request, 'myPosts.html', context=context_dict)
     return response

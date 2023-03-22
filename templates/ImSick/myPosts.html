@@ -44,7 +44,7 @@
                 <div class='card mb-4'>
                     <div class='card-body'> 
                         <h5 class="card-title"><a href="{% url 'HelpImSick:post' p.postID %}"> {{p.title}} </a></h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Posted by {{ p.postBy}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Posted by <a href="/viewprofile/{{ p.postBy}}/">{{p.postBy}}</a></h6>
                         <p class="card-text">{{p.postContent}}</p>
                     </div>      
                 </div>
@@ -62,7 +62,7 @@
                 <div class='card mb-4'>
                     <div class='card-body'> 
                         <h5 class="card-title"><a href="{% url 'HelpImSick:post' p.postID %}"> {{p.title}} </a></h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Posted by {{ p.postBy}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Posted by <a href="/viewprofile/{{ p.postBy}}/">{{p.postBy}}</a></h6>
                         <p class="card-text">{{p.postContent}}</p>
                     </div>      
                 </div>
