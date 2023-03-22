@@ -13,6 +13,7 @@ class UserAccount(models.Model):
     country = models.CharField(max_length=30, null= True)
     language = models.CharField(max_length=30, null= True)
     profilePicture = (models.ImageField(upload_to='profile_images',blank = True, null= True))
+    favoritePosts = models.ManyToManyField('Post', blank=True, related_name='favPosts')
     
     def __str__(self):
         return self.user.username
@@ -26,6 +27,7 @@ class Post(models.Model):
     postLikes = models.IntegerField(999)
     postBy = models.ForeignKey(UserAccount,on_delete=models.SET_NULL,null=True)
     likedBy = models.ManyToManyField(UserAccount, blank=True,related_name='liked_posts')
+    
 
     
 

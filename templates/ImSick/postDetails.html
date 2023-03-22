@@ -27,6 +27,13 @@
                         {% if post.postBy == user%}
                         <a href="{{post.postID}}/delete/" class="btn btn-danger">Delete</a>
                         {% endif%}
+                        {% if post.postBy != user%}
+                            {%if post not in user.favoritePosts.all%}
+                                <a href="{{post.postID}}/favPost/" class="btn btn-danger">Favourite Post</a>
+                            {%else%}
+                                <a href="{{post.postID}}/unfavPost/" class="btn btn-danger">Unfavourite Post</a>
+                            {%endif%}
+                        {% endif%}
                     </div>
                 </div>
 

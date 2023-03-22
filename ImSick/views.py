@@ -102,9 +102,11 @@ def myPosts(request):
 
     userAccount = UserAccount.objects.get(user=request.user)
     posts = Post.objects.filter(postBy=userAccount)
+    favPosts = userAccount.favoritePosts.all()
 
     context_dict = {'posts':posts}
     context_dict['user'] = userAccount
+    context_dict['favPosts'] = favPosts
 
     response = render(request, 'myPosts.html', context=context_dict)
     return response
@@ -220,6 +222,22 @@ def likePost(request,postID):
     postByID.likedBy.add(userAccount)
     postByID.postLikes += 1
     postByID.save()
+    return redirect(reverse('HelpImSick:post', args = [postID]))
+
+def favouritePost(request,postID):
+    postByID = Post.objects.get(postID=postID)
+    userAccount = UserAccount.objects.get(user=request.user)
+    if (postByID not in userAccount.favoritePosts.all()):
+        userAccount.favoritePosts.add(postByID)
+    userAccount.save()
+    return redirect(reverse('HelpImSick:post', args = [postID]))
+
+def unfavouritePost(request,postID):
+    postByID = Post.objects.get(postID=postID)
+    userAccount = UserAccount.objects.get(user=request.user)
+    if (postByID in userAccount.favoritePosts.all()):
+        userAccount.favoritePosts.remove(postByID)
+    userAccount.save()
     return redirect(reverse('HelpImSick:post', args = [postID]))
 
 def unlikePost(request,postID):
