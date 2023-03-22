@@ -8,6 +8,7 @@ body {
 
 h1 {
     color: #ffff;
+    text-shadow: 0 0 1.0rem #e7f3db;
 }
 
 .form-signin {
@@ -15,12 +16,16 @@ h1 {
     padding: 15px;
 }
 
+.form-floating{
+    margin-bottom: 10px;
+}
 
 .btn {
     background-color: #e7f3db;
     color: teal;
-    margin-bottom: -50px;
+    margin-top: 10px;
 }
+
 .btn:hover {
     color: #ffff;
     background-color: teal;
