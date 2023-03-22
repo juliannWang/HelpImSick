@@ -120,3 +120,48 @@ h3{
     margin-left: auto;
     margin-right: auto;
 }
+
+.btn-primary{
+    background-color: #e0f4fa;
+    color: rgb(9, 18, 188);
+    margin-bottom: 20px;
+    border:none;
+}
+
+.btn-primary:hover{
+    background-color: rgb(9, 18, 188);
+    color: e0f4fa;
+}
+
+.btn-danger{
+    background-color: #ffebeb;
+    color: rgb(234, 54, 54);
+    border:none;
+}
+
+.btn-danger:hover{
+    background-color: rgb(234, 54, 54);
+    color: #ffebeb;
+}
+
+.btn-secondary{
+    background-color: #f7f7f7;
+    color: rgb(77, 77, 77);
+}
+
+.btn-secondary:hover{
+    background-color: rgb(77, 77, 77);
+    color: #f7f7f7;
+}
+
+img.createpost{
+    position: relative;
+    left: 1080px;
+    top: 40px;
+    width: 40px;
+    height:40px;
+}
+
+img.createpost:hover{
+    filter:drop-shadow(0 0 1.0rem teal);
+}
