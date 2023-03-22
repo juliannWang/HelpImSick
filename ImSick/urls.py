@@ -17,5 +17,6 @@ urlpatterns = [
     path('nearby-doctors/', views.get_nearby_doctors, name = 'nearby-doctors'),
     path('logout',views.user_logout,name="logout"),
     path('search/',views.searchPosts,name="search"),
-    path('settings/',views.settings,name="settings")
+    path('settings/',views.settings,name="settings"),
+    path('viewprofile/<str:username>/',views.viewProfile,name="viewProfile")
 ]

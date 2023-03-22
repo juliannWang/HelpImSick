@@ -302,5 +302,16 @@ def settings(request):
 
     return response
 
+def viewProfile(request,username):
+    user = User.objects.get(username=username)
+    userAccount = UserAccount.objects.get(user=user)
+    posts = Post.objects.filter(postBy=userAccount)
+
+    context_dict = {'posts':posts}
+    context_dict['user'] = userAccount
+
+    response = render(request, 'myPosts.html', context=context_dict)
+    return response
+
 
 
