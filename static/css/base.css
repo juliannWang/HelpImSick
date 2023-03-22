@@ -1,4 +1,4 @@
-/* Show it is fixed to the top */
+/* base styling - navbar, icons */
 body {
     min-height: 75rem;
     padding-top: 4.5rem;
@@ -32,14 +32,14 @@ li{
 }  
 
 .btn {
-    background-color: #edf8e2;
+    background-color: #def2cb;
     color: teal;
 }
 
 .btn:hover {
-    color: #edf8e2;
+    color: #fff;
     background-color: teal;
-    border-color: #edf8e2;
+    border-color: #fff;
 }
 
 img.icon{
@@ -49,18 +49,6 @@ img.icon{
 
 img.icon:hover{
     filter: brightness(0);
-}
-
-img.createpost{
-    position: relative;
-    left: 1080px;
-    top: 40px;
-    width: 40px;
-    height:40px;
-}
-
-img.createpost:hover{
-    filter:drop-shadow(0 0 1.0rem teal);
 }
 
 .dropdown {
@@ -94,36 +82,41 @@ img.createpost:hover{
     display: block;
 }
 
-/* button colours for postdetails - like, unlike, delete AND settings */
-.btn-primary{
-    background-color: #e0f4fa;
-    color: rgb(9, 18, 188);
-    margin-bottom: 20px;
-    border:none;
+/* for create post icon */
+img.createpost{
+    position: relative;
+    left: 1080px;
+    top: 40px;
+    width: 40px;
+    height:40px;
 }
 
-.btn-primary:hover{
-    background-color: rgb(9, 18, 188);
-    color: e0f4fa;
+img.createpost:hover{
+    filter:drop-shadow(0 0 1.0rem teal);
 }
 
-.btn-danger{
-    background-color: #ffebeb;
-    color: rgb(234, 54, 54);
-    border:none;
+
+/* for creating posts (createPost.html) */
+.create-post{
+    text-align: center;
 }
 
-.btn-danger:hover{
-    background-color: rgb(234, 54, 54);
-    color: #ffebeb;
+.create-post input[type="file"]{
+    padding-left: 125px;
+    padding-bottom: 30px;
 }
 
-.btn-secondary{
-    background-color: #f7f7f7;
-    color: rgb(77, 77, 77);
+h3{
+    text-align: center;
+    font-size: 18px;
+    font-weight:bold;
+    padding-top: 30px;
 }
 
-.btn-secondary:hover{
-    background-color: rgb(77, 77, 77);
-    color: #f7f7f7;
+.autoresizing {
+    display: block;
+    overflow: hidden;
+    resize: none;
+    margin-left: auto;
+    margin-right: auto;
 }

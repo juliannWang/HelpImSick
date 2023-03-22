@@ -1,10 +1,36 @@
-<div class="card">
-    <div class="card-body">
-        <h3>Create a post!</h3>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary mt-3">Submit</button>
-        </form>
-    </div>
+{% extends 'base.html' %}
+{% block content%}
+{% load static %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js">
+</script>
+
+<div class = "create-post">
+    <h2>Create a Post</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <h3>Title: </h3>
+        <textarea class="autoresizing" name ="title" rows="1" cols="40"></textarea>
+
+        <h3>Post Content: </h3>
+        <textarea class="autoresizing" name ="postContent" rows="5" cols="40"></textarea>
+
+        <h3>Post Image:</h3>
+        <input type="file" name="postImage" id="myFile">
+
+        </br>
+        </br>
+
+        <button class="btn" type="submit">Submit</button>
+      
+        <script type="text/javascript">
+        $('.autoresizing').on('input', function () {
+            this.style.height = 'auto';  
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+        </script>
+
+    </form>
 </div>
+{% endblock %}
