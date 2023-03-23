@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 class UserAccount(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,primary_key=True)
@@ -23,8 +24,8 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     postContent = models.CharField(max_length=1000)
     postImage = (models.ImageField(upload_to='images',blank = True))
-    postDate = models.DateTimeField()
-    postLikes = models.IntegerField(999)
+    postDate = models.DateTimeField(auto_now_add=True)
+    postLikes = models.IntegerField(default=0)
     postBy = models.ForeignKey(UserAccount,on_delete=models.SET_NULL,null=True)
     likedBy = models.ManyToManyField(UserAccount, blank=True,related_name='liked_posts')
     
@@ -37,3 +38,6 @@ class Comment(models.Model):
     commentOnPost = models.ForeignKey(Post,on_delete=models.SET_NULL,null=True)
     commentDate = models.DateTimeField()
     commentContent = models.CharField(max_length=50)
+
+    
+   
