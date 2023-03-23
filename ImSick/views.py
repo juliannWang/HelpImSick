@@ -13,7 +13,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.generic import View
 from django.http import JsonResponse
-
+import googlemaps
 
 
 # Create your views here.
@@ -148,8 +148,7 @@ def get_nearby_doctors(request):
         lon = request.GET.get('lon')
 
         if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest': #checks if page is a ajax request
-            #api_key = 'AIzaSyBchxq-fKOpe1l1qeEZEX2NkseyzRbgnbs'
-            api_key = ""
+            api_key = 'AIzaSyBchxq-fKOpe1l1qeEZEX2NkseyzRbgnbs'
             client = googlemaps.Client(api_key)
 
             location = lat + "," +lon
