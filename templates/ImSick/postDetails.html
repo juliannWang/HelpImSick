@@ -14,6 +14,7 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <h1> {{post.title}} </h1>
+                        <small> posted by <a href="/viewprofile/{{post.postBy}}/">{{ post.postBy}}</a></small>
                         <p>Likes: {{post.postLikes}}</p>
                         {% if user not in post.likedBy.all %}
                             <a href="{{post.postID}}/like/" class="btn btn-primary"> Like</a>
@@ -43,7 +44,7 @@
                     {% for c in comments %}
                         <div class="border-bottom mb-3 pb-3">
                             <p> {{ c.commentContent}} </p>
-                            <small> Commented by {{ c.commentedBy.user}}</small>
+                            <small> Commented by <a href="/viewprofile/{{c.commentedBy.user}}/">{{ c.commentedBy.user}}</a></small>
                             {% if c.commentedBy == user %}
                             <a href="{{post.postID}}/deletecomment/{{c.commentID}}/" class="btn btn-danger">Delete</a>
                             {% endif %}

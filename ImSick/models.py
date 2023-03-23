@@ -7,7 +7,7 @@ class UserAccount(models.Model):
     
     #additional attributes
     name = models.CharField(max_length=50, null= True)
-    phoneNumber = models.IntegerField(20,null= True)
+    phoneNumber = models.CharField(max_length=20,null= True)
     email = models.CharField(max_length=100)
     about = models.CharField(max_length=200,null= True)
     country = models.CharField(max_length=30, null= True)
