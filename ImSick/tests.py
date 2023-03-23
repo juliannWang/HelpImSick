@@ -1,114 +1,252 @@
+import datetime
+from django.utils import timezone
 from django.urls import reverse
 import importlib
 from django.test import TestCase
 
+from django.contrib.auth.models import User
+from django.test import Client, TestCase
+from django.urls import reverse
+from ImSick.models import Post, Comment, UserAccount
 
-class PostDetailsTests(TestCase):
-    """
-    Tests to check the postDetails view.
-    We check whether the view exists, the mapping is correct, and the response is correct.
-    """
-    def setUp(self):
-        self.views_module = importlib.import_module('ImSick.views')
-        self.views_module_listing = dir(self.views_module)
-    
-    def test_view_exists(self):
 
-        name_exists = 'postDetails' in self.views_module_listing
-        is_callable = callable(self.views_module.about)
-        
-        self.assertTrue(name_exists, f"{FAILURE_HEADER}We couldn't find the view for your postDetails view! It should be called postDetails().{FAILURE_FOOTER}")
-        self.assertTrue(is_callable, f"{FAILURE_HEADER}Check you have defined your postDetails() view correctly. We can't execute it.{FAILURE_FOOTER}")
-    
-    def test_mapping_exists(self):
-       
-        self.assertEquals(reverse('HelpImSick:post'), 'post/<int:postID>', f"{FAILURE_HEADER}Your about URL mapping is either missing or mistyped.{FAILURE_FOOTER}")
-    
-    
+   
 class DeleteCommentTests(TestCase):  
 
-    def test_view_exists(self):
-
-        name_exists = 'deleteComment' in self.views_module_listing
-        is_callable = callable(self.views_module.about)
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.user_account = UserAccount.objects.create(
+            user=self.user,
+            name='Test User',
+            phoneNumber=1234567890,
+            email='test@example.com',
+            about='This is a test user.',
+            country='Test Country',
+            language='Test Language'
+        )
+        self.post = Post.objects.create(
+            title='Test Post',
+            postContent='This is a test post.',
+            postDate=timezone.now(),
+            postLikes=0,
+            postBy=self.user_account
+        )
+        self.comment = Comment.objects.create(
+            commentedBy=self.user_account,
+            commentOnPost=self.post,
+            commentDate=timezone.now(),
+            commentContent='This is a test comment.',
+            commentID=1
+        )
+        self.postID = 1
+        self.commentID = 1
+        self.url = reverse('HelpImSick:deleteComment',
+                           args=[self.postID, self.commentID])
         
-        self.assertTrue(name_exists, f"{FAILURE_HEADER}We couldn't find the view for your delete comment view! It should be called deleteComment().{FAILURE_FOOTER}")
-        self.assertTrue(is_callable, f"{FAILURE_HEADER}Check you have defined your deleteComment() view correctly. We can't execute it.{FAILURE_FOOTER}")
-    
-    def test_mapping_exists(self):
-       
-        self.assertEquals(reverse('HelpImSick:post'), 'post/<int:postID>/deletecomment/<int:commentID>/', f"{FAILURE_HEADER}Your about URL mapping is either missing or mistyped.{FAILURE_FOOTER}")
+        
+    def tests_delete_comment(self):
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.post(self.url)
+        self.assertFalse(Comment.objects.filter(commentID=self.commentID).exists())
+
 
 
 class DeletePostTests(TestCase):  
 
-    def test_view_exists(self):
-
-        name_exists = 'deletePost' in self.views_module_listing
-        is_callable = callable(self.views_module.about)
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.user_account = UserAccount.objects.create(
+            user=self.user,
+            name='Test User',
+            phoneNumber=1234567890,
+            email='test@example.com',
+            about='This is a test user.',
+            country='Test Country',
+            language='Test Language'
+        )
+        self.post = Post.objects.create(
+            title='Test Post',
+            postContent='This is a test post.',
+            postDate=timezone.now(),
+            postLikes=0,
+            postBy=self.user_account
+        )
+        self.comment = Comment.objects.create(
+            commentedBy=self.user_account,
+            commentOnPost=self.post,
+            commentDate=timezone.now(),
+            commentContent='This is a test comment.',
+            commentID=1
+        )
+        self.postID = 1
+        self.commentID = 1
+        self.url = reverse('HelpImSick:deletePost',
+                           args=[self.postID])
         
-        self.assertTrue(name_exists, f"{FAILURE_HEADER}We couldn't find the view for your delete post view! It should be called deletePost().{FAILURE_FOOTER}")
-        self.assertTrue(is_callable, f"{FAILURE_HEADER}Check you have defined your deletePost() view correctly. We can't execute it.{FAILURE_FOOTER}")
-    
-    def test_mapping_exists(self):
-       
-        self.assertEquals(reverse('HelpImSick:myPosts'), 'post/<int:postID>/delete/', f"{FAILURE_HEADER}Your about URL mapping is either missing or mistyped.{FAILURE_FOOTER}")
+        
+    def tests_delete_posts(self):
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.post(self.url)
+        self.assertFalse(Post.objects.filter(postID=self.postID).exists())
 
 class LikePostTests(TestCase):  
 
-    def test_view_exists(self):
-
-        name_exists = 'likePost' in self.views_module_listing
-        is_callable = callable(self.views_module.about)
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.user_account = UserAccount.objects.create(
+            user=self.user,
+            name='Test User',
+            phoneNumber=1234567890,
+            email='test@example.com',
+            about='This is a test user.',
+            country='Test Country',
+            language='Test Language'
+        )
+        self.post = Post.objects.create(
+            title='Test Post',
+            postContent='This is a test post.',
+            postDate=timezone.now(),
+            postLikes=0,
+            postBy=self.user_account
+        )
+        self.comment = Comment.objects.create(
+            commentedBy=self.user_account,
+            commentOnPost=self.post,
+            commentDate=timezone.now(),
+            commentContent='This is a test comment.',
+            commentID=1
+        )
+        self.postID = 1
+        self.commentID = 1
+        self.post.postLikes+=1
+        self.url = reverse('HelpImSick:likePost',
+                           args=[self.postID])
         
-        self.assertTrue(name_exists, f"{FAILURE_HEADER}We couldn't find the view for your like post view! It should be called likePost().{FAILURE_FOOTER}")
-        self.assertTrue(is_callable, f"{FAILURE_HEADER}Check you have defined your likePost() view correctly. We can't execute it.{FAILURE_FOOTER}")
+        
+    def tests_like_post(self):
+        self.client.login(username='testuser', password='testpass')
+        self.client.post(self.url)
+        self.assertEqual(self.post.postLikes, 1)
     
-    def test_mapping_exists(self):
-       
-        self.assertEquals(reverse('HelpImSick:post'), 'post/<int:postID>/like/', f"{FAILURE_HEADER}Your about URL mapping is either missing or mistyped.{FAILURE_FOOTER}")
 
 
 class favouritePostTests(TestCase):  
 
-    def test_view_exists(self):
-
-        name_exists = 'favouritePost' in self.views_module_listing
-        is_callable = callable(self.views_module.about)
-        
-        self.assertTrue(name_exists, f"{FAILURE_HEADER}We couldn't find the view for your favourite post view! It should be called favouritePost().{FAILURE_FOOTER}")
-        self.assertTrue(is_callable, f"{FAILURE_HEADER}Check you have defined your favouritePost() view correctly. We can't execute it.{FAILURE_FOOTER}")
     
-    def test_mapping_exists(self):
-       
-        self.assertEquals(reverse('HelpImSick:post'), 'post/<int:postID>/favPost/', f"{FAILURE_HEADER}Your about URL mapping is either missing or mistyped.{FAILURE_FOOTER}")
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.user_account = UserAccount.objects.create(
+            user=self.user,
+            name='Test User',
+            phoneNumber=1234567890,
+            email='test@example.com',
+            about='This is a test user.',
+            country='Test Country',
+            language='Test Language'
+        )
+        self.post = Post.objects.create(
+            title='Test Post',
+            postContent='This is a test post.',
+            postDate=timezone.now(),
+            postLikes=1,
+            postBy=self.user_account,
+            
+        )
+        self.comment = Comment.objects.create(
+            commentedBy=self.user_account,
+            commentOnPost=self.post,
+            commentDate=timezone.now(),
+            commentContent='This is a test comment.',
+            commentID=1
+        )
+        self.postID = 1
+        self.commentID = 1
+        self.url = reverse('HelpImSick:favPost',
+                           args=[self.postID])
+        self.user.favoritePosts.add(self.postID)
+        
+        
+    def tests_favourite_post(self):
+        self.client.login(username='testuser', password='testpass')
+        self.client.post(self.url)
+        self.assertEqual(self.user.favouritePosts, self.postID)
 
 class unfavouritePostTests(TestCase):  
 
-    def test_view_exists(self):
-
-        name_exists = 'unfavouritePost' in self.views_module_listing
-        is_callable = callable(self.views_module.about)
-        
-        self.assertTrue(name_exists, f"{FAILURE_HEADER}We couldn't find the view for your unfavourite post view! It should be called unfavouritePost().{FAILURE_FOOTER}")
-        self.assertTrue(is_callable, f"{FAILURE_HEADER}Check you have defined your unfavouritePost() view correctly. We can't execute it.{FAILURE_FOOTER}")
     
-    def test_mapping_exists(self):
-       
-        self.assertEquals(reverse('HelpImSick:post'), 'post/<int:postID>/unfavPost/', f"{FAILURE_HEADER}Your about URL mapping is either missing or mistyped.{FAILURE_FOOTER}")
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.user_account = UserAccount.objects.create(
+            user=self.user,
+            name='Test User',
+            phoneNumber=1234567890,
+            email='test@example.com',
+            about='This is a test user.',
+            country='Test Country',
+            language='Test Language'
+        )
+        self.post = Post.objects.create(
+            title='Test Post',
+            postContent='This is a test post.',
+            postDate=timezone.now(),
+            postLikes=1,
+            postBy=self.user_account
+        )
+        self.comment = Comment.objects.create(
+            commentedBy=self.user_account,
+            commentOnPost=self.post,
+            commentDate=timezone.now(),
+            commentContent='This is a test comment.',
+            commentID=1
+        )
+        self.postID = 1
+        self.commentID = 1
+        self.url = reverse('HelpImSick:unfavPost',
+                           args=[self.postID])
+        
+        
+    def tests_unfavourite_post(self):
+        self.client.login(username='testuser', password='testpass')
+        self.client.post(self.url)
+        self.assertFalse(self.user.favouritePosts, self.postID)
 
 class unlikePostTests(TestCase):  
 
-    def test_view_exists(self):
-
-        name_exists = 'unlikePost' in self.views_module_listing
-        is_callable = callable(self.views_module.about)
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.user_account = UserAccount.objects.create(
+            user=self.user,
+            name='Test User',
+            phoneNumber=1234567890,
+            email='test@example.com',
+            about='This is a test user.',
+            country='Test Country',
+            language='Test Language'
+        )
+        self.post = Post.objects.create(
+            title='Test Post',
+            postContent='This is a test post.',
+            postDate=timezone.now(),
+            postLikes=1,
+            postBy=self.user_account
+        )
+        self.comment = Comment.objects.create(
+            commentedBy=self.user_account,
+            commentOnPost=self.post,
+            commentDate=timezone.now(),
+            commentContent='This is a test comment.',
+            commentID=1
+        )
+        self.postID = 1
+        self.commentID = 1
+        self.post.postLikes-=1
+        self.url = reverse('HelpImSick:unlikePost',
+                           args=[self.postID])
         
-        self.assertTrue(name_exists, f"{FAILURE_HEADER}We couldn't find the view for your unlike post view! It should be called unlikePost().{FAILURE_FOOTER}")
-        self.assertTrue(is_callable, f"{FAILURE_HEADER}Check you have defined your likePost() view correctly. We can't execute it.{FAILURE_FOOTER}")
-    
-    def test_mapping_exists(self):
-       
-        self.assertEquals(reverse('HelpImSick:post'), 'post/<int:postID>/unlike/', f"{FAILURE_HEADER}Your about URL mapping is either missing or mistyped.{FAILURE_FOOTER}")
+        
+    def tests_unlike_post(self):
+        self.client.login(username='testuser', password='testpass')
+        self.client.post(self.url)
+        self.assertEqual(self.post.postLikes, 0)
 
 
