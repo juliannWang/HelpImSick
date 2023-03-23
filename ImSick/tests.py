@@ -13,6 +13,47 @@ from django.test import Client, TestCase
 from django.urls import reverse
 from ImSick.models import Post, Comment, UserAccount
 
+#tests for views
+
+class PostDetailsTests(TestCase):
+    
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.user_account = UserAccount.objects.create(
+            user=self.user,
+            name='Test User',
+            phoneNumber=1234567890,
+            email='test@example.com',
+            about='This is a test user.',
+            country='Test Country',
+            language='Test Language'
+        )
+        self.post = Post.objects.create(
+            title='Test Post',
+            postContent='This is a test post.',
+            postDate=timezone.now(),
+            postLikes=0,
+            postBy=self.user_account
+        )
+        self.comment = Comment.objects.create(
+            commentedBy=self.user_account,
+            commentOnPost=self.post,
+            commentDate=timezone.now(),
+            commentContent='This is a test comment.',
+            commentID=1
+        )
+        self.postID = 1
+        self.url = reverse('HelpImSick:post',
+                           args=[self.postID])
+        
+    def tests_post_details(self):
+        self.client.login(username='testuser', password='testpass')
+        self.client.post(self.url)
+        self.assertEquals(self.comment.commentID, 1)
+        self.assertEquals(self.post.postContent, 'This is a test post.') 
+        self.assertEquals(self.user_account.name,'Test User' ) 
+
+ 
 
    
 class DeleteCommentTests(TestCase):  
@@ -165,15 +206,16 @@ class favouritePostTests(TestCase):
         )
         self.postID = 1
         self.commentID = 1
+        self.user_account.favoritePosts.add(self.post)
         self.url = reverse('HelpImSick:favPost',
                            args=[self.postID])
-        self.user.favoritePosts.add(self.postID)
+        
         
         
     def tests_favourite_post(self):
         self.client.login(username='testuser', password='testpass')
         self.client.post(self.url)
-        self.assertEqual(self.user.favouritePosts, self.postID)
+        self.assertTrue(self.post in self.user_account.favoritePosts.all())
 
 class unfavouritePostTests(TestCase):  
 
@@ -212,7 +254,7 @@ class unfavouritePostTests(TestCase):
     def tests_unfavourite_post(self):
         self.client.login(username='testuser', password='testpass')
         self.client.post(self.url)
-        self.assertFalse(self.user.favouritePosts, self.postID)
+        self.assertFalse(self.post in self.user_account.favoritePosts.all())
 
 class unlikePostTests(TestCase):  
 
