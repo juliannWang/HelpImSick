@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import View
 from django.http import JsonResponse
 import googlemaps
+from django.contrib import messages
 
 
 # Create your views here.
@@ -61,8 +62,8 @@ def user_login(request):
                 return HttpResponse("Your HelpImSick account is disabled")
         
         else:
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Email or password incorrect")
+            messages.error(request, 'Invalid username or password')
+            return render(request, 'login.html')
 
     else:
         return render(request, 'login.html')
