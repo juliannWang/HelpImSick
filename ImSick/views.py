@@ -17,13 +17,6 @@ import googlemaps
 from django.contrib import messages
 
 
-# Create your views here.
-@login_required
-def test(request):
-    print("*********************** request ************************")
-    print(request.user.id)
-    return HttpResponse("test")
-
 #working
 @login_required
 def user_logout(request):
