@@ -31,9 +31,9 @@ MEDIA_URL = '/media/'
 SECRET_KEY = 'ac-)k4(u9prc1nm#e=h-4-)@5obf=vkft#zgt&pnd33o+x%ea4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['HelpImSick.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
