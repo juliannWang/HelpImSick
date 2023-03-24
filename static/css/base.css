@@ -156,10 +156,6 @@ h3{
 
 img.createpost{
     position: relative;
-    left: 1080px;
-    top: 40px;
-    width: 40px;
-    height:40px;
 }
 
 img.createpost:hover{
