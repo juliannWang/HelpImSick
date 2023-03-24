@@ -86,7 +86,9 @@ def createAccount(request):
             registered = True
 
         else:
-            print(user_form.errors)
+            messages.error(request, 'Username already exists')
+            return render(request, 'register.html', context={'form': user_form,
+                                                             'registered': registered})
         
         return redirect(reverse('HelpImSick:login'))
 
